@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 
 // Load the PNG image
 const image = new Image();
-image.src = 'image.png'; // Replace 'your_image.png' with your image file
+image.src = 'UQdYKRU.png'; // Replace 'your_image.png' with your image file
 
 // Define the initial position
 let x = 0;
