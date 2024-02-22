@@ -1,4 +1,4 @@
-const apiURL = 'https://api.github.com/users/yourusername/repos'; // Replace 'yourusername' with your GitHub username
+const apiURL = 'https://api.github.com/users/CyberGod45/repos'; // Replace 'yourusername' with your GitHub username
 
 // Fetch data from your API
 fetch(apiURL)
