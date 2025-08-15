@@ -10,7 +10,9 @@
         background-color: #0a0a0a;
         color: #00ff9f;
         font-family: 'Courier New', monospace;
+        overflow-x: hidden;
     }
+    /* Navbar */
     .navbar {
         background-color: #000000;
         border-bottom: 1px solid #00ff9f;
@@ -21,19 +23,54 @@
     .navbar-brand:hover, .nav-link:hover {
         text-shadow: 0 0 5px #00ff9f;
     }
+    /* Hero with Matrix background */
     .hero {
-        background: radial-gradient(circle at top, #001a0f, #000000);
-        padding: 100px 20px;
-        text-align: center;
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 1;
     }
-    .hero h1 {
-        font-size: 3rem;
-        text-shadow: 0 0 10px #00ff9f;
+    canvas#matrixCanvas {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: black;
     }
-    .hero p {
+    /* Glitch Name */
+    .glitch {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #00ff9f;
+        position: relative;
+        animation: glitchAnim 1s infinite;
+    }
+    @keyframes glitchAnim {
+        0% { text-shadow: 2px 0 red, -2px 0 blue; }
+        50% { text-shadow: -2px 0 red, 2px 0 blue; }
+        100% { text-shadow: 2px 0 red, -2px 0 blue; }
+    }
+    /* Typing Animation */
+    .typing {
+        border-right: 2px solid #00ff9f;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
         font-size: 1.2rem;
-        color: #00e6b8;
     }
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+    @keyframes blink {
+        50% { border-color: transparent }
+    }
+    /* Section Titles */
     .section-title {
         text-align: center;
         font-weight: bold;
@@ -41,6 +78,7 @@
         margin-bottom: 30px;
         text-shadow: 0 0 5px #00ff9f;
     }
+    /* Cards */
     .card {
         background-color: #111;
         color: #00ff9f;
@@ -51,6 +89,7 @@
         transform: scale(1.02);
         box-shadow: 0 0 15px #00ff9f55;
     }
+    /* Links */
     a {
         color: #00ff9f;
         text-decoration: none;
@@ -58,6 +97,7 @@
     a:hover {
         text-shadow: 0 0 5px #00ff9f;
     }
+    /* Footer */
     footer {
         background-color: #000;
         color: #00ff9f;
@@ -72,7 +112,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" href="#">Bhavikkumar Vasava</a>
+    <a class="navbar-brand glitch" href="#">Bhavikkumar Vasava</a>
     <button class="navbar-toggler text-success" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
       ☰
     </button>
@@ -89,13 +129,12 @@
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- Hero with Matrix Background -->
 <section class="hero">
-  <div class="container">
-    <h1>&lt;Cybersecurity Analyst & Automation Developer/&gt;</h1>
-    <p>Vadodara, Gujarat, India</p>
+    <canvas id="matrixCanvas"></canvas>
+    <h1 class="glitch">&lt;CyberGod &gt;</h1>
+    <p class="typing">Automation Developer | Software Engineer | Cybersecurity Analyst </p>
     <p><a href="mailto:bhavikvasava768@gmail.com" class="btn btn-outline-success btn-lg mt-3">Contact Me</a></p>
-  </div>
 </section>
 
 <!-- About -->
@@ -195,6 +234,43 @@
   <p>© 2025 Bhavikkumar Vasava. All Rights Reserved.</p>
 </footer>
 
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Matrix Background Script -->
+<script>
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = '012b';
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+
+const drops = Array(Math.floor(columns)).fill(1);
+
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#0f0';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 33);
+</script>
+
 </body>
 </html>
